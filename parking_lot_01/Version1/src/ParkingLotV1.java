@@ -1,4 +1,4 @@
-package parking_lot_01.src;
+package parking_lot_01.Version1.src;
 
 import java.util.HashMap;
 import java.util.Map;
