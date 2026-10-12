@@ -28,15 +28,20 @@ public class ParkingLot {
         parkingSpot.occupy(vehicle);
         notifyAvailabilityChange(parkingSpot);
 
-        return new Ticket("1",vehicle,parkingSpot,Instant.now());
+        return new Ticket("1",vehicle,parkingSpot,Instant.now(),TicketStatus.ACTIVE);
     }
-    public long unpark(Ticket ticket){
-        Instant exit = Instant.now();
+    public synchronized long unpark(Ticket ticket) {
+        if (ticket.getStatus() != TicketStatus.ACTIVE) {
+            throw new IllegalStateException("Ticket already used");
+        }
 
-        long price = pricingStrategy.calculatePrice(ticket,exit);
-        ParkingSpot spot = ticket.getSpot();
-        spot.release();
-        notifyAvailabilityChange(spot);
+        Instant exitTime = Instant.now();
+        long price = pricingStrategy.calculatePrice(ticket, exitTime);
+
+        ticket.getSpot().release();
+        ticket.setStatus(TicketStatus.COMPLETED);
+
+        notifyAvailabilityChange(ticket.getSpot());
 
         return price;
     }

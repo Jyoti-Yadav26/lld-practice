@@ -18,12 +18,12 @@ public class ParkingSpot {
         return parked == null;
     }
 
-    public void occupy(Vehicle vehicle) {
+    public synchronized void occupy(Vehicle vehicle) {
         if (!isFree()) {
-            throw new IllegalStateException("Parking spot is already occupied");
+            throw new IllegalStateException("Spot is already occupied");
         }
 
-        parked = vehicle;
+        this.parked = vehicle;
     }
 
     public void release() {

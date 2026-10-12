@@ -8,12 +8,14 @@ public class Ticket {
     private final Vehicle vehicle;
     private final ParkingSpot spot;
     private final Instant entryTime;
+    private TicketStatus status;
 
-    public Ticket(String id, Vehicle vehicle, ParkingSpot spot, Instant entryTime) {
+    public Ticket(String id, Vehicle vehicle, ParkingSpot spot, Instant entryTime, TicketStatus status) {
         this.ticketId = id;
         this.vehicle = vehicle;
         this.spot = spot;
         this.entryTime = entryTime;
+        this.status = status;
     }
 
     public ParkingSpot getSpot() {
@@ -30,5 +32,13 @@ public class Ticket {
 
     public String getId() {
         return ticketId;
+    }
+
+    public TicketStatus getStatus() {
+        return status;
+    }
+    public TicketStatus setStatus(TicketStatus stat) {
+        status=stat;
+        return status;
     }
 }
